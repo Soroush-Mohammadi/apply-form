@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>هوشیکا | به تیم ما بپیوندید</title>
+  <meta name="description"
+    content="هوشیکا؛ طراحی و توسعه وب. به دنبال طراح UI/UX، برنامه‌نویس فرانت‌اند و بک‌اند برای پروژه‌های داخلی و بین‌المللی هستیم. رزومه‌تان را بفرستید.">
+  <link rel="icon" type="image/png" href="/logo-mark.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+  <header class="top">
+    <div class="wrap">
+      <a href="#top" aria-label="هوشیکا"><img src="/logo-wordmark.png" alt="Hooshika" width="209" height="30"></a>
+      <a class="link" href="#apply">ارسال رزومه</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="apply" id="apply">
+      <div class="wrap apply-grid">
+        <div class="intro">
+          <h2>چطور عضو شوید؟</h2>
+          <p>کافیست رزومه خود را در همین صفحه بارگذاری کنید. پس از بررسی رزومه‌ها، با افراد منتخب تماس گرفته می‌شود.</p>
+          <strong>جای شما در تیم ما خالی است!</strong>
+          <p>اگر به دنبال یک فرصت واقعی برای رشد، تجربه و درآمد بر اساس توانایی‌های خود هستید، همین حالا رزومه‌تان را
+            ارسال کنید.</p>
+        </div>
+
+        <form id="form" novalidate>
+          <div class="row">
+            <div>
+              <label for="name">نام و نام خانوادگی</label>
+              <input id="name" type="text" autocomplete="name" required>
+            </div>
+            <div>
+              <label for="email">ایمیل</label>
+              <input id="email" type="email" dir="ltr" autocomplete="email" required>
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label for="phone">شماره تماس</label>
+              <input id="phone" type="tel" dir="ltr" autocomplete="tel">
+            </div>
+            <div>
+              <label for="position">سمت مورد نظر</label>
+              <select id="position">
+                <option value="">انتخاب کنید</option>
+                <option>UI/UX Designer</option>
+                <option>Front-End Developer</option>
+                <option>Back-End Developer</option>
+                <option>سایر</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="resume">فایل رزومه</label>
+            <div class="drop" id="drop">
+              <input id="resume" type="file" accept=".pdf,.doc,.docx" required>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 16V4M7 9l5-5 5 5M4 20h16" />
+              </svg>
+              <div class="fname" id="fname">فایل را اینجا بکشید یا برای انتخاب کلیک کنید</div>
+              <div class="hint">PDF یا Word، حداکثر ۴ مگابایت</div>
+            </div>
+          </div>
+
+          <div class="hp" aria-hidden="true"><label>وب‌سایت<input id="website" type="text" tabindex="-1"
+                autocomplete="off"></label></div>
+
+          <button class="btn submit" id="submit" type="submit">ارسال رزومه</button>
+          <p class="msg" id="msg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap"><span><strong>هوشیکا</strong> — طراحی و توسعه وب</span><span>© Hooshika</span></div>
+  </footer>
+
+  <script>
+    (function () {
+      var MAX = 4 * 1024 * 1024;
+      var form = document.getElementById('form');
+      var file = document.getElementById('resume');
+      var drop = document.getElementById('drop');
+      var fname = document.getElementById('fname');
+      var msg = document.getElementById('msg');
+      var btn = document.getElementById('submit');
+      var defaultLabel = fname.textContent;
+
+      function say(text, type) { msg.textContent = text; msg.className = 'msg ' + (type || ''); }
+      function ext(n) { var m = n.match(/\.[a-z0-9]+$/i); return m ? m[0].toLowerCase() : ''; }
+
+      file.addEventListener('change', function () {
+        fname.textContent = file.files[0] ? file.files[0].name : defaultLabel;
+      });
+      ['dragenter', 'dragover'].forEach(function (e) {
+        drop.addEventListener(e, function () { drop.classList.add('over'); });
+      });
+      ['dragleave', 'drop'].forEach(function (e) {
+        drop.addEventListener(e, function () { drop.classList.remove('over'); });
+      });
+
+      form.addEventListener('submit', async function (ev) {
+        ev.preventDefault();
+        say('');
+        if (document.getElementById('website').value) return;
+
+        var name = document.getElementById('name').value.trim();
+        var email = document.getElementById('email').value.trim();
+        var phone = document.getElementById('phone').value.trim();
+        var position = document.getElementById('position').value;
+        var f = file.files[0];
+
+        if (!name) return say('نام و نام خانوادگی را وارد کنید.', 'err');
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return say('یک ایمیل معتبر وارد کنید.', 'err');
+        if (!f) return say('فایل رزومه را انتخاب کنید.', 'err');
+        if (['.pdf', '.doc', '.docx'].indexOf(ext(f.name)) === -1) return say('فقط فایل PDF یا Word مجاز است.', 'err');
+        if (f.size > MAX) return say('حجم فایل باید کمتر از ۴ مگابایت باشد.', 'err');
+
+        btn.disabled = true;
+        btn.textContent = 'در حال ارسال…';
+        try {
+          var qs = new URLSearchParams({ filename: f.name, name: name, email: email, phone: phone, position: position });
+          var res = await fetch('/api/upload?' + qs.toString(), { method: 'POST', body: f });
+          var data = await res.json().catch(function () { return {}; });
+          if (!res.ok) throw new Error(data.error || 'ارسال انجام نشد.');
+          form.reset();
+          fname.textContent = defaultLabel;
+          say('رزومه شما ارسال شد. سپاس از شما.', 'ok');
+        } catch (err) {
+          say(err.message || 'ارسال انجام نشد. دوباره تلاش کنید.', 'err');
+        } finally {
+          btn.disabled = false;
+          btn.textContent = 'ارسال رزومه';
+        }
+      });
+    })();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "company-landing",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@vercel/blob": "^1.0.0"
+  }
+}
