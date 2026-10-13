@@ -67,6 +67,6 @@ export async function POST(request) {
     return json(200, { ok: true });
   } catch (err) {
     console.error(err);
-    return json(500, { error: 'خطایی رخ داد. لطفاً دوباره تلاش کنید.' });
+    return json(500, { error: 'Server error: ' + (err && err.message ? err.message : String(err)) });
   }
 }
