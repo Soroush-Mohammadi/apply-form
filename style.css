@@ -451,7 +451,8 @@
  @media (max-width : 980px) {
 
      .intro,
-     .top {
+     .top,
+     .wrap {
          padding: 20px;
      }
  }
