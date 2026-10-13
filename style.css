@@ -448,6 +448,12 @@
      }
  }
 
+ @media (max-width : 980px) {
+     .intro {
+         padding: 20px;
+     }
+ }
+
  @media (prefers-reduced-motion:reduce) {
      * {
          transition: none !important;
