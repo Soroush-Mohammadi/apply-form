@@ -449,7 +449,9 @@
  }
 
  @media (max-width : 980px) {
-     .intro {
+
+     .intro,
+     .top {
          padding: 20px;
      }
  }
