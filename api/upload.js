@@ -45,7 +45,7 @@ export async function POST(request) {
     const id = Date.now();
 
     const resume = await put(`resumes/${id}${ext}`, buffer, {
-      access: 'public',
+      access: 'private',
       contentType: ALLOWED[ext],
       addRandomSuffix: true,
     });
@@ -61,7 +61,7 @@ export async function POST(request) {
         resumeUrl: resume.url,
         submittedAt: new Date().toISOString(),
       }),
-      { access: 'public', contentType: 'application/json', addRandomSuffix: true }
+      { access: 'private', contentType: 'application/json', addRandomSuffix: true }
     );
 
     return json(200, { ok: true });
